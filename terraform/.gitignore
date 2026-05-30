@@ -6,7 +6,7 @@
 crash.log
 
 # Variables
-terraform.tfvars
+*terraform.tfvars
 *.auto.tfvars
 
 # Terraform plan files
