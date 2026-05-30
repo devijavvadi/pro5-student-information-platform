@@ -1,18 +1,11 @@
 package com.student;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 public class DBConnection {
-
-   // private static final String URL =
-    //        "jdbc:mysql://YOUR-RDS-ENDPOINT:3306/studentdb";
-
-    private static final String URL =
-        "jdbc:mysql://localhost:3306/studentdb";
-
-    private static final String USERNAME = "admin";
-    private static final String PASSWORD = "Student@123456";
 
     public static Connection getConnection() {
 
@@ -20,12 +13,25 @@ public class DBConnection {
 
         try {
 
+            Properties props = new Properties();
+
+            InputStream input =
+                    DBConnection.class
+                            .getClassLoader()
+                            .getResourceAsStream("db.properties");
+
+            props.load(input);
+
+            String url = props.getProperty("db.url");
+            String username = props.getProperty("db.username");
+            String password = props.getProperty("db.password");
+
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             con = DriverManager.getConnection(
-                    URL,
-                    USERNAME,
-                    PASSWORD);
+                    url,
+                    username,
+                    password);
 
         } catch (Exception e) {
             e.printStackTrace();
