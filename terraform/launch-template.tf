@@ -30,7 +30,9 @@ resource "aws_launch_template" "student_lt" {
     aws_security_group.ec2_sg.id
   ]
 
-  user_data = base64encode(file("${path.module}/userdata.sh"))
+  user_data = base64encode(templatefile("${path.module}/userdata.sh", {
+    rds_endpoint = aws_db_instance.student_db.endpoint
+  }))
 
   tag_specifications {
     resource_type = "instance"

@@ -24,3 +24,4 @@ output "rds_database_name" {
   description = "Database Name"
   value       = aws_db_instance.student_db.db_name
 }
+
