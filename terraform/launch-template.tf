@@ -21,7 +21,7 @@ data "aws_ami" "amazon_linux" {
 resource "aws_launch_template" "student_lt" {
 
   name_prefix   = "student-app-"
-  image_id      = data.aws_ami.amazon_linux.id
+  image_id      = "ami-01ce11bf95898ae76"
   instance_type = "t3.micro"
 
   key_name = var.key_pair_name
