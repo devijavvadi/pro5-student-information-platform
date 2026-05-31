@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Student Information System</title>
+<title>Student Information System - Build Test</title>
 </head>
 
 <body>
