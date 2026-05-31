@@ -16,7 +16,7 @@ java -version
 cd /opt
 
 # Download Tomcat 11
-wget https://downloads.apache.org/tomcat/tomcat-11/v11.0.10/bin/apache-tomcat-11.0.10.tar.gz
+wget https://archive.apache.org/dist/tomcat/tomcat-11/v11.0.10/bin/apache-tomcat-11.0.10.tar.gz
 
 # Extract Tomcat
 tar -xzf apache-tomcat-11.0.10.tar.gz
