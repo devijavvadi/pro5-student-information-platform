@@ -47,11 +47,7 @@ aws s3 cp s3://project5warfile/ROOT.war /opt/tomcat/webapps/ROOT.war
 # Wait for RDS to become available
 
 
-until mysqladmin ping -h ${rds_endpoint} -u admin -p'Geethanshi1234' --silent
-do
-  echo "Waiting for RDS..."
-  sleep 10
-done
+sleep 90
 
 # Create database and table
 
@@ -61,10 +57,10 @@ CREATE DATABASE IF NOT EXISTS studentdb;
 USE studentdb;
 
 CREATE TABLE IF NOT EXISTS students (
-id INT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(100),
-email VARCHAR(100),
-course VARCHAR(100)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    course VARCHAR(100)
 );
 EOF
 
