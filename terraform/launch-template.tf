@@ -1,12 +1,9 @@
 ########################################
-# Latest Amazon Linux 2023 AMI
+# Latest Amazon Linux 2023 AMI Data Source
 ########################################
-
 data "aws_ami" "amazon_linux" {
-
   most_recent = true
-
-  owners = ["amazon"]
+  owners      = ["amazon"]
 
   filter {
     name   = "name"
@@ -17,11 +14,11 @@ data "aws_ami" "amazon_linux" {
 ########################################
 # Launch Template
 ########################################
-
 resource "aws_launch_template" "student_lt" {
-
   name_prefix   = "student-app-"
-  image_id      = "ami-01ce11bf95898ae76"
+  
+  # This will now find the data block above correctly
+  image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
 
   key_name = var.key_pair_name
@@ -35,7 +32,9 @@ resource "aws_launch_template" "student_lt" {
   ]
 
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
-    rds_endpoint = aws_db_instance.student_db.endpoint
+    rds_endpoint = aws_db_instance.student_db.address
+    db_user      = var.db_username
+    db_pass      = var.db_password
   }))
 
   tag_specifications {
