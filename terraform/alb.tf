@@ -40,7 +40,7 @@ resource "aws_lb_target_group" "student_tg" {
 
     enabled = true
 
-    path = "/studentapp"
+    path = "/"
 
     protocol = "HTTP"
 
@@ -54,7 +54,7 @@ resource "aws_lb_target_group" "student_tg" {
 
     unhealthy_threshold = 2
 
-    matcher = "200"
+    matcher = "200,302,404"
   }
 
   tags = {
