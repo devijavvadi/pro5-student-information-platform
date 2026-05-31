@@ -41,3 +41,20 @@ EOF
 
 # 8. Start Tomcat server
 /opt/tomcat/bin/startup.sh
+
+
+# 9. Wait 15 seconds to allow Tomcat to fully extract your ROOT.war into a folder
+sleep 15
+
+# 10. Inject your dynamic RDS endpoint straight into the app's configuration file
+# NOTE: Update the file name/path below to match your actual Java config file (e.g., application.properties)
+cat <<EOF > /opt/tomcat/webapps/ROOT/WEB-INF/classes/application.properties
+db.url=jdbc:mysql://${rds_endpoint}:3306/studentdb
+db.username=${db_user}
+db.password=${db_pass}
+EOF
+
+# 11. Restart Tomcat so it picks up the newly injected database configuration
+/opt/tomcat/bin/shutdown.sh
+sleep 5
+/opt/tomcat/bin/startup.sh

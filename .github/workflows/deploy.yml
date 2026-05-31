@@ -6,9 +6,7 @@ on:
       - main
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     defaults:
@@ -16,7 +14,6 @@ jobs:
         working-directory: application
 
     steps:
-
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
@@ -29,7 +26,7 @@ jobs:
       - name: Verify Java Version
         run: java -version
 
-      - name: Build ROOT.war
+      - name: Build Code with Maven
         run: mvn clean package
 
       - name: Configure AWS Credentials
@@ -37,11 +34,12 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: us-east-1 # FIX: Hardcoded region (or keep using your secret variable)
 
+      # FIX: Use wildcard (*.war) to upload the file as ROOT.war to your S3 bucket
       - name: Upload WAR to S3
         run: |
-          aws s3 cp target/ROOT.war s3://project5warfile/ROOT.war
+          aws s3 cp target/*.war s3://project5warfile/ROOT.war
 
       - name: Verify Upload
         run: |
